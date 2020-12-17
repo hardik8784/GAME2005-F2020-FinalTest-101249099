@@ -10,4 +10,11 @@ public class SceneManager : MonoBehaviour
         // Only specifying the sceneName or sceneBuildIndex will load the Scene with the Single mode
         UnityEngine.SceneManagement.SceneManager.LoadScene("Main", LoadSceneMode.Single);
     }
+
+    public void GoToStart()
+    {
+        // Only specifying the sceneName or sceneBuildIndex will load the Scene with the Single mode
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Start", LoadSceneMode.Single);
+    }
+
 }
