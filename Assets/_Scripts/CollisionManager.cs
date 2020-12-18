@@ -8,6 +8,7 @@ public class CollisionManager : MonoBehaviour
 {
     public CubeBehaviour[] cubes;
     public BulletBehaviour[] spheres;
+    public PlayerBehaviour player;
 
     private static Vector3[] faces;
 
@@ -125,6 +126,9 @@ public class CollisionManager : MonoBehaviour
     public static void CheckAABBs(CubeBehaviour a, CubeBehaviour b)
     {
         Contact contactB = new Contact(b);
+        RigidBody3D aRigidBody = a.GetComponent<RigidBody3D>();
+        RigidBody3D bRigidBody = b.GetComponent<RigidBody3D>(); 
+
 
         if ((a.min.x <= b.max.x && a.max.x >= b.min.x) &&
             (a.min.y <= b.max.y && a.max.y >= b.min.y) &&
@@ -177,7 +181,20 @@ public class CollisionManager : MonoBehaviour
                     a.isGrounded = true;
                 }
                 
-
+                if(a.tag == "Player" && bRigidBody.bodyType == BodyType.DYNAMIC)
+                {
+                    bRigidBody.velocity.y = 0;
+                    bRigidBody.acceleration.y = 0;
+                    bRigidBody.transform.position += a.GetComponent<PlayerBehaviour>().forward / 1.5f;
+                    bRigidBody.velocity = a.GetComponent<PlayerBehaviour>().forward * 2.0f * Time.deltaTime;
+                }
+                if (a.tag == "Player" && bRigidBody.bodyType == BodyType.STATIC)
+                {
+                    bRigidBody.velocity.y = 0;
+                    bRigidBody.acceleration.y = 0;
+                    //bRigidBody.GetComponent<RigidBody3D>().Stop();
+                    //b.isGrounded = true;
+                }
                 // add the new contact
                 a.contacts.Add(contactB);
                 a.isColliding = true;

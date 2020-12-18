@@ -8,7 +8,7 @@ public class PlayerBehaviour : MonoBehaviour
     public Transform bulletSpawn;
     public GameObject bullet;
     public int fireRate;
-
+    public Vector3 forward;
 
     public BulletManager bulletManager;
 
@@ -31,6 +31,8 @@ public class PlayerBehaviour : MonoBehaviour
     {
         _Fire();
         _Move();
+        forward.x = playerCam.transform.forward.x;
+        forward.z = playerCam.transform.forward.z;
     }
 
     private void _Move()
@@ -53,12 +55,46 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 // move forward
                 body.velocity = playerCam.transform.forward * speed * Time.deltaTime;
+
+                if (Input.GetAxisRaw("Horizontal") > 0.0f)
+                {
+                    // move right
+
+                    body.velocity += playerCam.transform.right * speed * Time.deltaTime;
+                    body.velocity.x *= 0.5f;
+                    body.velocity.z *= 0.5f;
+                }
+
+                else if (Input.GetAxisRaw("Horizontal") < 0.0f)
+                {
+                    // move left
+                    body.velocity += -playerCam.transform.right * speed * Time.deltaTime;
+                    body.velocity.x *= 0.5f;
+                    body.velocity.z *= 0.5f;
+                }
             }
 
             if (Input.GetAxisRaw("Vertical") < 0.0f) 
             {
                 // move Back
                 body.velocity = -playerCam.transform.forward * speed * Time.deltaTime;
+
+                if (Input.GetAxisRaw("Horizontal") > 0.0f)
+                {
+                    // move right
+
+                    body.velocity += playerCam.transform.right * speed * Time.deltaTime;
+                    body.velocity.x *= 0.5f;
+                    body.velocity.z *= 0.5f;
+                }
+
+                else if (Input.GetAxisRaw("Horizontal") < 0.0f)
+                {
+                    // move left
+                    body.velocity += -playerCam.transform.right * speed * Time.deltaTime;
+                    body.velocity.x *= 0.5f;
+                    body.velocity.z *= 0.5f;
+                }
             }
 
             body.velocity = Vector3.Lerp(body.velocity, Vector3.zero, 0.9f);
