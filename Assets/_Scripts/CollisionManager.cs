@@ -8,7 +8,7 @@ public class CollisionManager : MonoBehaviour
 {
     public CubeBehaviour[] cubes;
     public BulletBehaviour[] spheres;
-    public PlayerBehaviour player;
+    public PlayerBehaviour player;              //For Task1 added
 
     private static Vector3[] faces;
 
@@ -229,7 +229,7 @@ public class CollisionManager : MonoBehaviour
                     bRigidBody.velocity.y = 0;
                     bRigidBody.acceleration.y = 0;
                     bRigidBody.transform.position += a.GetComponent<PlayerBehaviour>().forward / 1.5f;
-                    bRigidBody.velocity = a.GetComponent<PlayerBehaviour>().forward * 2.0f * Time.deltaTime;
+                    bRigidBody.velocity = a.GetComponent<PlayerBehaviour>().forward * 1.5f * Time.deltaTime;
                 }
                 if (a.tag == "Player" && bRigidBody.bodyType == BodyType.STATIC)
                 {

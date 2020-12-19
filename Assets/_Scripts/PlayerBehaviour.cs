@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerBehaviour : MonoBehaviour
 {
     public Transform bulletSpawn;
     public GameObject bullet;
     public int fireRate;
-    public Vector3 forward;
+    public Vector3 forward;             //For Task1 
 
     public BulletManager bulletManager;
 
@@ -31,8 +32,16 @@ public class PlayerBehaviour : MonoBehaviour
     {
         _Fire();
         _Move();
-        forward.x = playerCam.transform.forward.x;
+
+        forward.x = playerCam.transform.forward.x;                  //Task1
         forward.z = playerCam.transform.forward.z;
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            // Only specifying the sceneName or sceneBuildIndex will load the Scene with the Single mode
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Start", LoadSceneMode.Single);
+        }
+
     }
 
     private void _Move()
